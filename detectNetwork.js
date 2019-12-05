@@ -38,8 +38,11 @@ var detectNetwork = function(cardNumber) {
 	// Check if MasterCard
 	// has prefix of 51~55 and length of 16
 	// need 5 tests
-	if((cardNumber.startsWith('51') || cardNumber.startsWith('52') || cardNumber.startsWith('53') || cardNumber.startsWith('54') || cardNumber.startsWith('55')) &&(cardNumber.length === 16)){
-		return 'MasterCard';
+	if(cardNumber.length === 16){
+		var num = Math.floor(parseInt(cardNumber)/(10 ** 14))
+		if(51 <= num && num <=55 ){
+			return 'MasterCard';
+		}
 	}
 
 	// Check if Discover
@@ -52,7 +55,7 @@ var detectNetwork = function(cardNumber) {
 	// Check if Maestro
 	// has prefix of 5018, 5020, 5038, 6304 and length of 12~19
 	// need 32 tests
-	if((cardNumber.startsWith('5018') || cardNumber.startsWith('5020') || cardNumber.startsWith('5038') || cardNumber.startsWith('6304')) && (cardNumber.length === 12 || cardNumber.length === 13 || cardNumber.length === 14 || cardNumber.length === 15 || cardNumber.length === 16 || cardNumber.length === 17 || cardNumber.length === 18 || cardNumber.length === 19)){
+	if((cardNumber.startsWith('5018') || cardNumber.startsWith('5020') || cardNumber.startsWith('5038') || cardNumber.startsWith('6304')) && (12 <= cardNumber.length && cardNumber.length <= 19)){
 		return 'Maestro';
 	}
 };
