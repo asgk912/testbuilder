@@ -28,6 +28,19 @@ var detectNetwork = function(cardNumber) {
 		return 'American Express';
 	}
 
+	// Check if Switch
+	// has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19
+	// if prefix is long, then choose Switch over Visa (reason why this code is right above Visa)
+	if(cardNumber.startsWith('4903') || cardNumber.startsWith('4905') || cardNumber.startsWith('4911') ||
+		cardNumber.startsWith('4936') || cardNumber.startsWith('564182') || cardNumber.startsWith('633110') ||
+		cardNumber.startsWith('6333') || cardNumber.startsWith('6759')){
+		
+		if(cardNumber.length === 16 || cardNumber.length === 18 || cardNumber.length === 19){
+			return 'Switch'
+		}
+	}
+
+
 	// Check if Visa
 	// has prefix of 4 and length of 13, 16, or 19
 	// need 3 tests
@@ -68,7 +81,20 @@ var detectNetwork = function(cardNumber) {
 
 	// Check if China UnionPay
 	// has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19
-
+	if(16 <= cardNumber.length && cardNumber.length <= 19){
+		var prefix = parseInt(cardNumber.substring(0,6));
+		if(622126 <= prefix <= 622925){
+			return 'China UnionPay';
+		}
+		prefix = parseInt(cardNumber.substring(0,3))
+		if(624 <= prefix <= 626){
+			return 'China UnionPay';
+		}
+		prefix = parseInt(cardNumber.substring(0,4))
+		if(6282 <= prefix <= 6288){
+			return 'China UnionPay';
+		}
+	}
 };
 
 
