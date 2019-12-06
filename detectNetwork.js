@@ -39,8 +39,8 @@ var detectNetwork = function(cardNumber) {
 	// has prefix of 51~55 and length of 16
 	// need 5 tests
 	if(cardNumber.length === 16){
-		var num = Math.floor(parseInt(cardNumber)/(10 ** 14))
-		if(51 <= num && num <=55 ){
+		var prefix = parseInt(cardNumber.substring(0,2));
+		if(51 <= prefix && prefix <= 55 ){
 			return 'MasterCard';
 		}
 	}
@@ -48,8 +48,15 @@ var detectNetwork = function(cardNumber) {
 	// Check if Discover
 	// has prefix of 6011, 644~649, or 65 and length of 16 or 19
 	// need 16 tests
-	if((cardNumber.startsWith('6011') || cardNumber.startsWith('644') || cardNumber.startsWith('645') || cardNumber.startsWith('646') || cardNumber.startsWith('647') || cardNumber.startsWith('648') || cardNumber.startsWith('649') || cardNumber.startsWith('65')) && (cardNumber.length === 16 || cardNumber.length === 19)){
-		return 'Discover';
+	if(cardNumber.length === 16 || cardNumber.length === 19){
+		if(cardNumber.startsWith('6011') || cardNumber.startsWith('65')){
+			return 'Discover';
+		}
+		
+		var prefix = parseInt(cardNumber.substring(0,3));
+		if(644<= prefix && prefix <= 649){
+			return 'Discover';
+		}
 	}
 
 	// Check if Maestro
@@ -58,6 +65,10 @@ var detectNetwork = function(cardNumber) {
 	if((cardNumber.startsWith('5018') || cardNumber.startsWith('5020') || cardNumber.startsWith('5038') || cardNumber.startsWith('6304')) && (12 <= cardNumber.length && cardNumber.length <= 19)){
 		return 'Maestro';
 	}
+
+	// Check if China UnionPay
+	// has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19
+
 };
 
 

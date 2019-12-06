@@ -315,3 +315,12 @@ describe('Maestro', function() {
   })
 });
 
+describe('China UnionPay', function() {
+  // Write full test coverage for the Maestro card
+  var assert = chai.assert;
+  //prefix of 5018
+  it('has a prefix of 622126 and a length of 16', function(){
+    assert(detectNetwork('6221261234567890') === 'China UnionPay');
+  })
+});
+
